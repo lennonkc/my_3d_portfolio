@@ -9,7 +9,9 @@ const Footer = () => {
 
       <div className='footer-container'>
         <p>
-          © 2023 <strong>Adrian Hajdin</strong>. All rights reserved.
+          © 2025 Created by <strong> KunCheng Li</strong>. All rights reserved. 
+          {/* <br></br>Webstyle designed by  */}
+          {/* <a href='https://github.com/adrianhajdin/3D_portfolio?tab=readme-ov-file' target='_blank' rel='noreferrer'> Adrian Hajdin</a>. */}
         </p>
 
         <div className='flex gap-3 justify-center items-center'>

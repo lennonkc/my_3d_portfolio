@@ -15,15 +15,16 @@ const About = () => {
         Hello, I'm{" "}
         <span className='blue-gradient_text font-semibold drop-shadow'>
           {" "}
-          Adrian
+          KunCheng Li
         </span>{" "}
         👋
       </h1>
 
       <div className='mt-5 flex flex-col gap-3 text-slate-500'>
         <p>
-          Software Engineer based in Croatia, specializing in technical
-          education through hands-on learning and building applications.
+        I am a Software Engineer based in Shenzhen China, with a vision to create an AI application that will have over 500k monthly active users within three years. 
+        <br></br>
+        My plan is to launch an AI application every 1 to 2 months. If you have any ideas, feel free to reach out to me!
         </p>
       </div>
 
