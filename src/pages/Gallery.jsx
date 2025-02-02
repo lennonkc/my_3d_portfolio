@@ -91,10 +91,18 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
   const isActive = params?.id === name
   useCursor(hovered)
   useFrame((state, dt) => {
+    const time = state.clock.elapsedTime;
+    // 限制 hue (色相) 在 0.55 - 0.65 之间（蓝色范围）
+    const hue = 0.55 + 0.02 * Math.sin(time * 1); // 0.05 控制流动幅度，2 控制速度
+    // 让亮度（L）做微小变化，让渐变更自然
+    const lightness = 0.5 + 0.02 * Math.sin(time * 1); // 让亮度在 0.4 - 0.6 之间波动
+    // 生成动态蓝色
+    const flowingBlue = new THREE.Color().setHSL(hue, 1, lightness); // 饱和度固定 1
+
     image.current.material.zoom = 2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2
     easing.damp3(image.current.scale, [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1], 0.1, dt)
-    easing.dampC(frame.current.material.color, hovered ? 'orange' : 'white', 0.1, dt)
-  })
+    easing.dampC(frame.current.material.color, hovered ? flowingBlue : new THREE.Color('white'), 0.1, dt);
+  });
   return (
     <group {...props}>
       <mesh

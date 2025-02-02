@@ -4,7 +4,7 @@ import { logo } from "../assets/images";
 
 const Navbar = () => {
   return (
-    <header className='header'>
+    <header className='header pl-8 pr-8'>
 
       <NavLink to='/' className="w-11 h-11 rounded-lg bg-white 
       items-center justify-center flex font-bold shadow-md">
