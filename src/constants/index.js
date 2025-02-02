@@ -1,4 +1,4 @@
-import { meta, shopify, starbucks, tesla } from "../assets/images";
+import { sdmc, thrasio, smartdove, chinaUnicom } from "../assets/images";
 import {
     car,
     contact,
@@ -23,7 +23,8 @@ import {
     summiz,
     tailwindcss,
     threads,
-    typescript
+    typescript,
+    wechat
 } from "../assets/icons";
 
 export const skills = [
@@ -111,56 +112,53 @@ export const skills = [
 
 export const experiences = [
     {
-        title: "React.js Developer",
-        company_name: "Starbucks",
-        icon: starbucks,
+        title: "The Founder of SMARTDOVE Project",
+        company_name: "Student Project in GDUT - Bachelor Degree in Computer Science",
+        icon: smartdove,
         iconBg: "#accbe1",
-        date: "March 2020 - April 2021",
+        date: "2017 - 2020",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "SMARTDOVE is an intelligent text converter based on WeChat Mini Programs. It can recognize your text input and optimize it into a more trendy and engaging content.",
+            "I am the founder, designer, and operator of the project. At our peak, the team consisted of 20 members and we had over 5,000 monthly active users.",
+            "I received the Top Student Entrepreneurship Award from the Guangdong Provincial Government and went to Silicon Valley, USA, for a project roadshow in 2019.",
+            "Mastered full-stack engineering skills, leadership abilities, and design expertise.",
         ],
     },
     {
-        title: "React Native Developer",
-        company_name: "Tesla",
-        icon: tesla,
+        title: "Technical Project Manager",
+        company_name: "China Unicom",
+        icon: chinaUnicom,
         iconBg: "#fbc3bc",
-        date: "Jan 2021 - Feb 2022",
+        date: "2021 - 2022",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Responsible for a range of daily support tasks, including installations, deployments, troubleshooting, software upgrades, and compliance checks for hardware and software products such as firewalls, switches, internet behavior management routers, cloud desktops, endpoint security software, and VPN servers.",
+            "Proficient in various documentation tools, including WPS, Microsoft Office, and Google Docs, with a commitment to continuously creating and updating technical documentation.",
+            "Manage and maintain a variety of electronic devices in the office, including cameras, projectors, microphones, smart TVs, time clock machines, printers, and Wi-Fi routers.",
+            "Troubleshoot system software issues, such as connectivity problems on Windows and Mac systems, software crashes, and data loss on disks.",
         ],
     },
     {
-        title: "Web Developer",
-        company_name: "Shopify",
-        icon: shopify,
+        title: "Global Technical Support",
+        company_name: "SDMC Technology",
+        icon: sdmc,
         iconBg: "#b7e4c7",
-        date: "Jan 2022 - Jan 2023",
+        date: "2022 - 2024",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Provide technical support for projects in over 7 countries worldwide, covering multiple fields such as networking, software, hardware, and Linux servers, among others.",
+            "Accountable for customer satisfaction as first priority. Keep updating technical documents and host regular training meetings.",
         ],
     },
     {
-        title: "Full stack Developer",
-        company_name: "Meta",
-        icon: meta,
+        title: "System Administrator",
+        company_name: "Thrasio",
+        icon: thrasio,
         iconBg: "#a2d2ff",
-        date: "Jan 2023 - Present",
+        date: "2024 - Present",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
-        ],
+            "Developing engineering applications in the field of AI.",
+            "Managing various cloud platforms and services within the company.",
+            "Desktop IT support."
+            ],
     },
 ];
 
@@ -173,13 +171,17 @@ export const socialLinks = [
     {
         name: 'GitHub',
         iconUrl: github,
-        link: 'https://github.com/YourGitHubUsername',
+        link: 'https://github.com/lennonkc',
+    },
+    {
+        name: 'WeChat',
+        iconUrl: wechat,
     },
     {
         name: 'LinkedIn',
         iconUrl: linkedin,
-        link: 'https://www.linkedin.com/in/YourLinkedInUsername',
-    }
+        link: 'https://www.linkedin.com/in/kuncheng-li',
+    },
 ];
 
 export const projects = [

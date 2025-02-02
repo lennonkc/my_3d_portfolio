@@ -1,15 +1,15 @@
 import hero from './hero.jpg'
-import meta from './meta.png'
-import shopify from './shopify.png'
-import starbucks from './starbucks.png'
-import tesla from './tesla.png'
+import sdmc from './sdmc.svg'
+import thrasio from './thrasio.png'
 import logo from './logo.svg'
+import smartdove from './smartdove.png'
+import chinaUnicom from './chinaUnicom.png'
 
 export {
     hero,
-    meta,
-    shopify,
-    starbucks,
-    tesla,
-    logo
+    sdmc,
+    thrasio,
+    logo,
+    smartdove,
+    chinaUnicom
 }

@@ -18,7 +18,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-vertical-timeline-component": "^3.6.0",
-    "three": "^0.157.0"
+    "three": "^0.157.0",
+    "uuid-by-string": "^4.0.0",
+    "wouter": "^3.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -4,6 +4,58 @@
 @tailwind components;
 @tailwind utilities;
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%; /* 占满屏幕高度 */
+  overflow: hidden; /* 如果需要也可以改为 auto，看需求 */
+}
+
+/* 如果 Navbar 不想固定在顶部，就让它在文档流中占高度即可 */
+header.header {
+  flex: 0 0 auto;
+  /* 你原来的样式都可以保留 */
+  /* 比如 background-color / height / 等等 */
+}
+
+/* 同理 Footer */
+footer {
+  flex: 0 0 auto;
+  /* 原样式保留 */
+}
+
+/* 中间内容区域，flex:1 占据剩余空间 */
+.content-container {
+  flex: 1 1 auto;
+  position: relative;    /* 让 Canvas 可以绝对定位 */
+  overflow: hidden;      /* 确保没有滚动条 or 根据需求 */
+}
+
+.gallery-wrapper {
+  position: absolute; /* 让它在 content-container 内铺满 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 让 canvas 自己100%覆盖父容器 */
+canvas {
+  display: block; /* 避免默认inline导致的怪异边距 */
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+#drawAnimation {
+  width: 88px;
+  height: 48px;
+  margin: auto;
+  /* margin-bottom: 12px; */
+  background-image: url(./assets/images/dragAnimation.svg);
+}
+
 :root {
   --blue-rgb: 237 245 255;
   --green-rgb: 125 161 35;

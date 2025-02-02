@@ -19,6 +19,9 @@ const Navbar = () => {
         <NavLink to='/projects' className={({ isActive }) => isActive ? "rounded-lg bg-white p-2 items-center justify-center flex font-bold shadow-md blue-gradient_text text-xl" : "text-black p-2 font-bold"}>
           Projects
         </NavLink>
+        <NavLink to='/gallery' className={({ isActive }) => isActive ? "rounded-lg bg-white p-2 items-center justify-center flex font-bold shadow-md blue-gradient_text text-xl" : "text-black p-2 font-bold"}>
+          Gallery
+        </NavLink>
       </nav>
     </header>
   );
