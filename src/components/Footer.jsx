@@ -1,9 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // ✅ 引入 useLocation
 import { socialLinks } from "../constants";
 import { useState } from 'react';
 
 const Footer = () => {
   // 🔹 使用 `useState` 追踪是否正在悬停 WeChat 图标
+  const location = useLocation(); // ✅ 获取当前 URL
+
+  // ✅ 如果当前页面是 /gallery，则不渲染 Footer
+  if (location.pathname === "/gallery") {
+    return null;
+  }
+  
   const [isWeChatHovered, setIsWeChatHovered] = useState(false);
 
   return (
