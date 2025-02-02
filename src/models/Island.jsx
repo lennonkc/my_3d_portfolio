@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
-import islandScene from "../assets/3d/island.glb";
+import islandScene from "../assets/3d/building.glb";
 
 export function Island({
   isRotating,
@@ -214,34 +214,583 @@ export function Island({
   return (
     // {Island 3D model from: https://sketchfab.com/3d-models/foxs-islands-163b68e09fcc47618450150be7785907}
     <a.group ref={islandRef} {...props}>
+        <group position={[0, -0.06, 0]} scale={0.5}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_41.geometry}
+          material={materials['Material 12113']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_42.geometry}
+          material={materials.Standard_1_003}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_43.geometry}
+          material={materials['mat_05 - Default_016']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_44.geometry}
+          material={materials['mat_01 - Default_004']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_45.geometry}
+          material={materials['mat_04- Default']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_46.geometry}
+          material={materials['mat_02 - Default_003']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_47.geometry}
+          material={materials['mat_03 - DefaultEE']}
+        />
+      </group>
+      <group position={[0, -0.06, 0]} scale={0.5}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_49.geometry}
+          material={materials.Standard_1_003}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_50.geometry}
+          material={materials['Material 12117_004']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_51.geometry}
+          material={materials['Material 40']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_52.geometry}
+          material={materials['Material 12107_008']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_53.geometry}
+          material={materials['Material 95_004']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_54.geometry}
+          material={materials['Material 10']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_55.geometry}
+          material={materials['Material 9_001']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_56.geometry}
+          material={materials['Material 8_001']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_57.geometry}
+          material={materials['Material 7']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_58.geometry}
+          material={materials['mat_04 - Default_006']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_59.geometry}
+          material={materials['Material 3_007']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_60.geometry}
+          material={materials['Material 12115_007']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_61.geometry}
+          material={materials['Material 12114_002']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_62.geometry}
+          material={materials['Material 3_010']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_63.geometry}
+          material={materials['Material 96_002']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_64.geometry}
+          material={materials['Material 7400']}
+        />
+      </group>
+      <group position={[-1.358, -0.11, 2.099]} rotation={[Math.PI, -1.355, Math.PI]} scale={1.266}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[2.287, 0.142, 1.488]} rotation={[Math.PI, -1.538, Math.PI]} scale={0.767}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[3.17, 0.045, -1.999]} rotation={[Math.PI, -1.355, Math.PI]} scale={1.617}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[1.873, 0.007, -2.124]} rotation={[Math.PI, -1.355, Math.PI]} scale={1.369}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[1.317, 0.011, 3.272]} rotation={[Math.PI, -1.355, Math.PI]} scale={0.866}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[-2.031, -0.018, 2.69]} rotation={[0, -1.464, 0]} scale={1.122}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[2.604, -0.058, 2.631]} rotation={[0, -1.28, 0]} scale={1.186}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[-3.353, -0.106, 0.919]} scale={1.686}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[-2.617, -0.061, 2.303]} rotation={[Math.PI, -0.967, Math.PI]} scale={1.152}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[3.314, -0.375, -0.446]} rotation={[Math.PI, -0.741, Math.PI]} scale={0.795}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[1.483, 0.058, 2.251]} rotation={[Math.PI, -1.538, Math.PI]} scale={0.767}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
+      <group position={[2.259, -0.159, -0.271]} scale={1.337}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001.geometry}
+          material={materials.tree}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cylinder001_1.geometry}
+          material={materials['green tree']}
+        />
+      </group>
       <mesh
-        geometry={nodes.polySurface944_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock012.geometry}
+        material={nodes.Rock012.material}
+        position={[2.762, -0.239, -2.383]}
+        rotation={[1.803, 1.471, -1.858]}
+        scale={0.887}
       />
       <mesh
-        geometry={nodes.polySurface945_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock011.geometry}
+        material={nodes.Rock011.material}
+        position={[3.202, -0.36, -2.619]}
+        rotation={[0.401, 0.314, -1.625]}
+        scale={0.887}
       />
       <mesh
-        geometry={nodes.polySurface946_tree2_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock010.geometry}
+        material={nodes.Rock010.material}
+        position={[2.62, 0.346, -3.16]}
+        rotation={[-2.708, -1.108, 0.157]}
+        scale={1.207}
       />
       <mesh
-        geometry={nodes.polySurface947_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock009.geometry}
+        material={nodes.Rock009.material}
+        position={[-0.404, -0.72, -2.85]}
+        rotation={[-0.174, 0.216, -0.365]}
+        scale={1.513}
       />
       <mesh
-        geometry={nodes.polySurface948_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock008.geometry}
+        material={nodes.Rock008.material}
+        position={[0.43, -0.136, -2.896]}
+        rotation={[-2.744, -0.631, 0.562]}
+        scale={0.793}
       />
       <mesh
-        geometry={nodes.polySurface949_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock007.geometry}
+        material={nodes.Rock007.material}
+        position={[-1.006, -0.554, 3.266]}
+        rotation={[-3.115, 0.553, -0.053]}
+        scale={0.793}
       />
       <mesh
-        geometry={nodes.pCube11_rocks1_0.geometry}
-        material={materials.PaletteMaterial001}
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock006.geometry}
+        material={nodes.Rock006.material}
+        position={[0.743, -0.908, 3.343]}
+        rotation={[2.825, -0.282, 1.031]}
+        scale={0.793}
       />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock005.geometry}
+        material={nodes.Rock005.material}
+        position={[3.742, -0.908, -0.367]}
+        rotation={[2.825, -0.282, 1.031]}
+        scale={0.793}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock004.geometry}
+        material={nodes.Rock004.material}
+        position={[3.26, -0.541, 2.126]}
+        rotation={[2.825, -0.282, 1.031]}
+        scale={0.793}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock003.geometry}
+        material={nodes.Rock003.material}
+        position={[3.656, -0.649, 2.439]}
+        rotation={[0.037, 0.669, 0.074]}
+        scale={0.793}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock002.geometry}
+        material={nodes.Rock002.material}
+        position={[3.358, -0.649, 1.627]}
+        rotation={[0.037, 0.669, 0.074]}
+        scale={0.793}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock001.geometry}
+        material={nodes.Rock001.material}
+        position={[2.78, -0.269, 1.076]}
+        rotation={[-2.744, -0.631, 0.562]}
+        scale={0.793}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Rock.geometry}
+        material={nodes.Rock.material}
+        position={[3.441, -0.756, 0.731]}
+        rotation={[-0.102, 0.236, -0.354]}
+        scale={1.207}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cloud002.geometry}
+        material={materials.clouds}
+        position={[5.381, 4.334, -3.492]}
+        rotation={[1.728, 0, 0]}
+        scale={0.846}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cloud001.geometry}
+        material={materials.clouds}
+        position={[-2.085, 4.895, -0.413]}
+        scale={0.83}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cloud.geometry}
+        material={materials.clouds}
+        position={[3.565, 2.721, 2.5]}
+        rotation={[-2.773, 0.077, 3.112]}
+        scale={0.531}
+      />
+      <group position={[-1.822, -0.029, 3.32]} rotation={[Math.PI, -1.031, Math.PI]} scale={1.123}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane010.geometry}
+          material={materials['Wood-tree']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane010_1.geometry}
+          material={materials.Tree}
+        />
+      </group>
+      <group position={[2.109, 0.011, 3.713]} rotation={[-Math.PI, 0.283, -Math.PI]} scale={1.48}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane010.geometry}
+          material={materials['Wood-tree']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane010_1.geometry}
+          material={materials.Tree}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Plane069.geometry}
+        material={materials['Ground-pasture']}
+        position={[-0.004, -0.017, 0.043]}
+        scale={[8, 1, 8]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cylinder036.geometry}
+        material={materials['Base-pasture']}
+        position={[-0.01, -0.325, 0.012]}
+        scale={[8, 1, 8]}
+      />
+      <group position={[0, -0.06, 0]} scale={0.5}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_66.geometry}
+          material={materials['mat_05 - Default_018']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_67.geometry}
+          material={materials.Standard_1_003}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_68.geometry}
+          material={materials['Material 12124']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_69.geometry}
+          material={materials['Material 12123']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_70.geometry}
+          material={materials['Material 12121']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_71.geometry}
+          material={materials['Material 12120']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_72.geometry}
+          material={materials['Material 12119']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_73.geometry}
+          material={materials['Material 98_005']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_74.geometry}
+          material={materials['Material 12416']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_75.geometry}
+          material={materials['Material 12116']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_76.geometry}
+          material={materials['Material 12115_002']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_77.geometry}
+          material={materials['Material 12114_004']}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.gujian_78.geometry}
+          material={materials['Material 12113']}
+        />
+      </group>
     </a.group>
   );
 }
