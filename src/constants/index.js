@@ -177,6 +177,7 @@ export const socialLinks = [
     {
         name: 'WeChat',
         iconUrl: wechat,
+        link: 'https://drive.google.com/file/d/1qOWl4Nh9DaF2CuDTIEK8hoPmKJMw_57-/view?usp=drive_link',
     },
     {
         name: 'LinkedIn',
