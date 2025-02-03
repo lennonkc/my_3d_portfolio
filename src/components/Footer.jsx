@@ -10,7 +10,7 @@ const Footer = () => {
   if (location.pathname === "/gallery") {
     return null;
   }
-  
+
   const [isWeChatHovered, setIsWeChatHovered] = useState(false);
 
   return (
@@ -19,7 +19,7 @@ const Footer = () => {
 
       <div className='footer-container'>
         <p>
-          © 2025 Created by <strong>KunCheng Li</strong>. All rights reserved. 
+          © 2025 Created by <strong>KunCheng Li</strong>. All rights reserved.
           <br />
           This website is for personal educational use only. If there are any copyright infringements, please contact me.
         </p>
@@ -27,13 +27,15 @@ const Footer = () => {
         {/* 🔹 社交图标 */}
         <div className='flex gap-3 justify-center items-center relative'>
           {socialLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              to={link.link} 
+            <Link
+              key={link.name}
+              to={link.link}
               target='_blank'
               className="relative"
-              onMouseEnter={() => link.name === "WeChat" && setIsWeChatHovered(true)}
-              onMouseLeave={() => link.name === "WeChat" && setIsWeChatHovered(false)}
+              onMouseEnter={() => {
+                if (link.name === "WeChat") setIsWeChatHovered(true)}}
+              onMouseLeave={() => {
+                if (link.name === "WeChat") setIsWeChatHovered(false)}}
             >
               {/* 默认社交图标 */}
               <img
@@ -47,7 +49,7 @@ const Footer = () => {
                 <img
                   src="src/assets/images/wechatQRcode.png" // 确保路径正确
                   alt="WeChat QR Code"
-                  style={{ width: "250px", height: "300px", maxWidth: "none", display: "block", left: "50px"}}
+                  style={{ width: "250px", height: "300px", maxWidth: "none", display: "block", left: "50px" }}
                   className="absolute top-[-1280%] transform -translate-x-1/2 shadow-lg transition-opacity duration-300"
                 />
               )}

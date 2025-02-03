@@ -24,7 +24,8 @@ import {
     tailwindcss,
     threads,
     typescript,
-    wechat
+    wechat,
+    gmail
 } from "../assets/icons";
 
 export const skills = [
@@ -68,11 +69,11 @@ export const skills = [
         name: "Motion",
         type: "Animation",
     },
-    {
-        imageUrl: mui,
-        name: "Material-UI",
-        type: "Frontend",
-    },
+    // {
+    //     imageUrl: mui,
+    //     name: "Material-UI",
+    //     type: "Frontend",
+    // },
     {
         imageUrl: nextjs,
         name: "Next.js",
@@ -88,16 +89,16 @@ export const skills = [
         name: "React",
         type: "Frontend",
     },
-    {
-        imageUrl: redux,
-        name: "Redux",
-        type: "State Management",
-    },
-    {
-        imageUrl: sass,
-        name: "Sass",
-        type: "Frontend",
-    },
+    // {
+    //     imageUrl: redux,
+    //     name: "Redux",
+    //     type: "State Management",
+    // },
+    // {
+    //     imageUrl: sass,
+    //     name: "Sass",
+    //     type: "Frontend",
+    // },
     {
         imageUrl: tailwindcss,
         name: "Tailwind CSS",
@@ -164,9 +165,9 @@ export const experiences = [
 
 export const socialLinks = [
     {
-        name: 'Contact',
-        iconUrl: contact,
-        link: '/contact',
+        name: 'Gmail',
+        iconUrl: gmail,
+        link: 'mailto:lennonlkc@gmail.com',
     },
     {
         name: 'GitHub',

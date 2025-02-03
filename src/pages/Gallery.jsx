@@ -99,7 +99,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
     // 生成动态蓝色
     const flowingBlue = new THREE.Color().setHSL(hue, 1, lightness); // 饱和度固定 1
 
-    image.current.material.zoom = 2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2
+    image.current.material.zoom = Math.min(1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 5) / 2, 1.8);
     easing.damp3(image.current.scale, [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1], 0.1, dt)
     easing.dampC(frame.current.material.color, hovered ? flowingBlue : new THREE.Color('white'), 0.1, dt);
   });
@@ -117,14 +117,13 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
+        <Image raycast={() => null} ref={image} scale={[1, 1.6, 1]} position={[0, 0, 0.7]} url={url} />  //scale控制内部图片宽高比
       </mesh>
       {isActive && (<Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.55, GOLDENRATIO, 0]} 
       fontSize={0.025} color="black"
       outlineWidth={0.002}  // 加一点外轮廓增强对比度
       outlineColor="white">
-        {props.title}
-        {/* {name.split('-').join(' ')} */}
+        {props.title}{/* {name.split('-').join(' ')} */}
       </Text>)}
     </group>
   )
