@@ -47,7 +47,7 @@ const Footer = () => {
               {/* 🔹 只在 WeChat 被悬停时，显示二维码 */}
               {link.name === "WeChat" && isWeChatHovered && (
                 <img
-                  src="src/assets/images/wechatQRcode.png" // 确保路径正确
+                  src="/wechatQRcode.png" // 确保路径正确
                   alt="WeChat QR Code"
                   style={{ width: "250px", height: "300px", maxWidth: "none", display: "block", left: "50px" }}
                   className="absolute top-[-1280%] transform -translate-x-1/2 shadow-lg transition-opacity duration-300"
