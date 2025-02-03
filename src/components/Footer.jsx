@@ -21,7 +21,7 @@ const Footer = () => {
         <p>
           © 2025 Created by <strong>KunCheng Li</strong>. All rights reserved.
           <br />
-          This website is for personal educational use only. If there are any copyright infringements, please contact me.
+          This website is for personal learning use only. No commercial use.
         </p>
 
         {/* 🔹 社交图标 */}
