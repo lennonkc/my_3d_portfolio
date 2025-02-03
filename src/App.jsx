@@ -7,18 +7,18 @@ import { About, Contact, Home, Projects, Gallery } from "./pages";
 const pexel = (id) => `/galleryOut${id}.png`
 const images = [
   // Front
-  { position: [0, 0, 1.5], rotation: [0, 0, 0], url: pexel(1),title: "Everything on Chat",idname:'eoc',idurl:'/galleryOut1.png'},
+  { position: [0, 0, 1.5], rotation: [0, 0, 0], url: pexel(1),title: "Everything on Chat",idname:'eoc',idurl:'/galleryOut1.png',videoUrl:'https://vimeo.com/1052963291' },
   // Back
   // { position: [-0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(416430) },
   // { position: [0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(310452) },
   // Left
   // { position: [-1.75, 0, 0.25], rotation: [0, Math.PI / 2.5, 0], url: pexel(327482) },
   // { position: [-2.15, 0, 1.5], rotation: [0, Math.PI / 2.5, 0], url: pexel(325185) },
-  { position: [-1.5, 0, 2.15], rotation: [0, Math.PI / 3, 0], url: pexel(2),title: "Meeting Assistant",idname:'ma',idurl:'/galleryOut1.png'},
+  { position: [-1.5, 0, 2.15], rotation: [0, Math.PI / 3, 0], url: pexel(2),title: "Meeting Assistant",idname:'ma',idurl:'/galleryOut2.png',videoUrl:'https://vimeo.com/1052963540'},
   // Right
   // { position: [1.75, 0, 0.25], rotation: [0, -Math.PI / 2.5, 0], url: pexel(227675) },
   // { position: [2.15, 0, 1.5], rotation: [0, -Math.PI / 2.5, 0], url: pexel(911738) },
-  { position: [1.5, 0, 2.15], rotation: [0, -Math.PI / 3, 0], url: pexel(3), title: "SmartDove",idname:'sd',idurl:'/galleryOut1.png'},
+  { position: [1.5, 0, 2.15], rotation: [0, -Math.PI / 3, 0], url: pexel(3), title: "SmartDove",idname:'sd',idurl:'/galleryOut3.png',videoUrl:'https://vimeo.com/1052963908'},
 ]
 
 const App = () => {
