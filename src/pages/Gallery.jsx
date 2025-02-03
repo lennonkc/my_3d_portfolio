@@ -4,7 +4,6 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useCursor, MeshReflectorMaterial, Image, Text, Environment } from '@react-three/drei'
 import { useRoute, useLocation } from 'wouter'
 import { easing } from 'maath'
-import getUuid from 'uuid-by-string'
 
 const GOLDENRATIO = 1.61803398875
 
@@ -39,7 +38,7 @@ export const Gallery = ({ images }) => (
 function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
   const ref = useRef()
   const clicked = useRef()
-  const [, params] = useRoute('/item/:id')
+  const [, params] = useRoute('/gallery/:id')
   const [, setLocation] = useLocation()
   const [screenWidth, setScreenWidth] = useState(window.innerWidth) //适配屏幕宽度
 
@@ -74,7 +73,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   return (
     <group
       ref={ref}
-      onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : '/item/' + e.object.name))}
+      onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : '/gallery/' + e.object.name))}
       onPointerMissed={() => setLocation('/')}>
       {images.map((props) => <Frame key={props.url} {...props} /> /* prettier-ignore */)}
     </group>
@@ -84,25 +83,58 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
 function Frame({ url, c = new THREE.Color(), ...props }) {
   const image = useRef()
   const frame = useRef()
-  const [, params] = useRoute('/item/:id')
+  const [, params] = useRoute('/gallery/:id')
   const [hovered, hover] = useState(false)
+  const [, setLocation] = useLocation();
   const [rnd] = useState(() => Math.random())
-  const name = getUuid(url)
+  const name = props.idname
   const isActive = params?.id === name
-  useCursor(hovered)
-  useFrame((state, dt) => {
-    const time = state.clock.elapsedTime;
-    // 限制 hue (色相) 在 0.55 - 0.65 之间（蓝色范围）
-    const hue = 0.55 + 0.02 * Math.sin(time * 1); // 0.05 控制流动幅度，2 控制速度
-    // 让亮度（L）做微小变化，让渐变更自然
-    const lightness = 0.5 + 0.02 * Math.sin(time * 1); // 让亮度在 0.4 - 0.6 之间波动
-    // 生成动态蓝色
-    const flowingBlue = new THREE.Color().setHSL(hue, 1, lightness); // 饱和度固定 1
 
-    image.current.material.zoom = Math.min(1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 5) / 2, 1.8);
-    easing.damp3(image.current.scale, [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1], 0.1, dt)
-    easing.dampC(frame.current.material.color, hovered ? flowingBlue : new THREE.Color('white'), 0.1, dt);
+  useCursor(hovered)
+
+  useFrame((state, dt) => {
+    // 当 isActive 为 true => 显示 GIF => 不执行放大/悬停动画
+    if (isActive) {
+      // 强制 scale 和颜色复位，不要动态
+      image.current.scale.set(0.85, 0.9, 0.9);
+      frame.current.material.color.set('white'); 
+      // 也可以设定 frame.current.material.color.set('#151515')，看你想不想让相框也恢复别的颜色
+      
+    } else {
+      // 原本的动态特效
+      const time = state.clock.elapsedTime;
+      const hue = 0.55 + 0.02 * Math.sin(time);
+      const lightness = 0.5 + 0.02 * Math.sin(time);
+      const flowingBlue = new THREE.Color().setHSL(hue, 1, lightness);
+
+      // 放大缩小
+      image.current.material.zoom = Math.min(
+        1.5 + Math.sin(rnd * 10000 + time / 5) / 2,
+        1.8
+      );
+      // 当 hovered 时缩小一点点
+      easing.damp3(
+        image.current.scale,
+        [0.85 * (hovered ? 0.85 : 1), 0.9 * (hovered ? 0.905 : 1), 1],
+        0.1,
+        dt
+      );
+      // 边框颜色
+      easing.dampC(
+        frame.current.material.color,
+        hovered ? flowingBlue : new THREE.Color('white'),
+        0.1,
+        dt
+      );
+    }
   });
+
+  // 点击相框/图片 => 如果是激活状态 => 回 '/', 否则 => '/item/:id'
+  const handleClick = (e) => {
+    e.stopPropagation(); // 不让事件冒泡到父 group
+    setLocation(isActive ? '/' : `/gallery/${props.idname}`);
+  };
+
   return (
     <group {...props}>
       <mesh
@@ -117,8 +149,16 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} scale={[1, 1.6, 1]} position={[0, 0, 0.7]} url={url} />  //scale控制内部图片宽高比
+          {/* 🔹 关键改动：根据 isActive 切换 url */}
+          <Image
+          onClick={handleClick}
+          ref={image}
+          scale={[1, 1.6, 1]}
+          position={[0, 0, 0.7]}
+          url={isActive ? props.idurl : url}
+        />
       </mesh>
+
       {isActive && (<Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.55, GOLDENRATIO, 0]} 
       fontSize={0.025} color="black"
       outlineWidth={0.002}  // 加一点外轮廓增强对比度
