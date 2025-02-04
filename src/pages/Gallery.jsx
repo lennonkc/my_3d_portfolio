@@ -57,7 +57,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
     } else {
       // 🔹 根据屏幕宽度调整相机默认位置
       if (screenWidth < 768) { // 适配小屏幕
-        p.set(0, 0, 7.0) // 适当拉远
+        p.set(0, 0.2, 7.0) // 适当拉远
       } else if (screenWidth < 1024) {
         p.set(0, 0.2, 5.5) // 平板稍微近一些
       } else {
@@ -108,7 +108,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
         name={name}
         onPointerOver={(e) => (e.stopPropagation(), hover(true))}
         onPointerOut={() => hover(false)}
-        scale={[1, GOLDENRATIO, 0.05]}
+        scale={[1.1, GOLDENRATIO, 0.05]} // 👈 这里控制了整体外框大小
         position={[0, GOLDENRATIO / 2, 0]}>
         <boxGeometry />
         <meshStandardMaterial color="#151515" metalness={0.5} roughness={0.5} envMapIntensity={2} />
@@ -116,7 +116,8 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} scale={[1, 1.6, 1]} position={[0, 0, 0.7]} url={url} />
+        //下面的scale调整相框内图片大小
+        <Image raycast={() => null} ref={image} scale={[1, 1.5, 1]} position={[0, 0, 0.7]} url={url} />
       </mesh>
       {isActive && (
         <>
@@ -125,7 +126,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
             maxWidth={0.5}
             anchorX="left"
             anchorY="top"
-            position={[0.55, GOLDENRATIO, 0]}
+            position={[0.60, GOLDENRATIO, 0]}
             fontSize={0.025}
             color="black"
             outlineWidth={0.002}
