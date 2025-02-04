@@ -7,7 +7,7 @@ import { About, Contact, Home, Projects, Gallery } from "./pages";
 const pexel = (id) => `/galleryOut${id}.png`
 const images = [
   // Front
-  { position: [0, 0, 1.5], rotation: [0, 0, 0], url: pexel(1),title: "Everything on Chat",idname:'eoc',idurl:'/galleryOut1.png',videoUrl:'https://vimeo.com/1052963291',introduce:'AI chat with multi-APIs'},
+  { position: [0, 0, 1.5], rotation: [0, 0, 0], url: pexel(1),title: "Everything on Chat",idname:'eoc',idurl:'/galleryOut1.png',videoUrl:'https://vimeo.com/1052963291',introduce:'AI chat with APIs'},
   // Back
   // { position: [-0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(416430) },
   // { position: [0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(310452) },
