@@ -132,10 +132,8 @@ export const experiences = [
         iconBg: "#fbc3bc",
         date: "2021 - 2022",
         points: [
-            "Responsible for a range of daily support tasks, including installations, deployments, troubleshooting, software upgrades, and compliance checks for hardware and software products such as firewalls, switches, internet behavior management routers, cloud desktops, endpoint security software, and VPN servers.",
-            "Proficient in various documentation tools, including WPS, Microsoft Office, and Google Docs, with a commitment to continuously creating and updating technical documentation.",
-            "Manage and maintain a variety of electronic devices in the office, including cameras, projectors, microphones, smart TVs, time clock machines, printers, and Wi-Fi routers.",
-            "Troubleshoot system software issues, such as connectivity problems on Windows and Mac systems, software crashes, and data loss on disks.",
+            "Responsible for installations, deployments, troubleshooting, software upgrades, and compliance checks for hardware and software systems such as firewalls, switches, internet behavior management routers, cloud desktops, endpoint security, and VPN servers.",
+            "Proficient in documentation, with a commitment to continuously creating and updating technical documentation.",
         ],
     },
     {
@@ -157,7 +155,7 @@ export const experiences = [
         date: "2024 - Present",
         points: [
             "Developing engineering applications in the field of AI.",
-            "Managing various cloud platforms and services within the company.",
+            "Administering various systems and cloud platforms.",
             "Desktop IT support."
             ],
     },

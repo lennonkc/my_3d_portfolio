@@ -27,11 +27,11 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className='info-box'>
         <p className='font-medium sm:text-xl text-center'>
-        My resume highlights my ambitions and skills, demonstrating my commitment to achieving continuous success.
+        My experience showcases my ambitions and skills, reflecting my dedication to achieving ongoing success.
         </p>
 
         <Link to='/about' className='neo-brutalism-white neo-btn'>
-          KunCheng`s Resume
+          ABOUT ME
           <img src={arrow} alt='arrow' className='w-4 h-4 object-contain' />
         </Link>
       </div>
@@ -42,12 +42,12 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className='info-box'>
         <p className='font-medium text-center sm:text-xl'>
-        I have a diverse portfolio with extensive work across fields. 
+        I have a great interest in applications within the field of AI. 
         <br />Check it out!
         </p>
 
         <Link to='/gallery' className='neo-brutalism-white neo-btn'>    
-          KunCheng`s Portfolio
+          MY AI APPS
           <img src={arrow} alt='arrow' className='w-4 h-4 object-contain' />
         </Link>
       </div>

@@ -122,7 +122,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
         <>
           {/* 文字 */}
           <Text
-            maxWidth={0.1}
+            maxWidth={0.5}
             anchorX="left"
             anchorY="top"
             position={[0.55, GOLDENRATIO, 0]}
@@ -131,7 +131,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
             outlineWidth={0.002}
             outlineColor="white"
           >
-            {props.title}
+            {props.title+"\n"+props.introduce}
           </Text>
 
           {/* 3D 按钮 */}
