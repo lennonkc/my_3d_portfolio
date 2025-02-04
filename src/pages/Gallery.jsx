@@ -57,7 +57,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
     } else {
       // 🔹 根据屏幕宽度调整相机默认位置
       if (screenWidth < 768) { // 适配小屏幕
-        p.set(0, 0.2, 7.0) // 适当拉远
+        p.set(0, 0.4, 7.0) // 适当拉远
       } else if (screenWidth < 1024) {
         p.set(0, 0.2, 5.5) // 平板稍微近一些
       } else {
