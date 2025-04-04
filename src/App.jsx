@@ -35,7 +35,8 @@ const App = () => {
                   <Route path='/about' element={<About />} />
                   <Route path='/projects' element={<Projects />} />
                   <Route path='/contact' element={<Contact />} />
-                  <Route path='/gallery/*' element={<Gallery images={images}/>} />
+                  <Route path='/gallery' element={<Gallery images={images}/>} />
+                  <Route path='/gallery/:id' element={<Gallery images={images}/>} />
                 </Routes>
                 <Footer />
               </>

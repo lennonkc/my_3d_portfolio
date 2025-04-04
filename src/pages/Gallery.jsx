@@ -38,9 +38,10 @@ export const Gallery = ({ images }) => (
 function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
   const ref = useRef()
   const clicked = useRef()
-  const [, params] = useRoute('/item/:id')
+  const [, params] = useRoute('/gallery/:id')
   const [, setLocation] = useLocation()
   const [screenWidth, setScreenWidth] = useState(window.innerWidth) //适配屏幕宽度
+  const [isDirectAccess, setIsDirectAccess] = useState(true) // 新增：标记是否是直接访问
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth)
@@ -49,6 +50,17 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   }, [])
 
   useEffect(() => {
+    // 如果是直接访问且有ID参数，重定向到/gallery
+    if (isDirectAccess && params?.id) {
+      setLocation('/gallery')
+      return
+    }
+
+    // 设置为非直接访问，后续点击将正常工作
+    if (isDirectAccess) {
+      setIsDirectAccess(false)
+    }
+
     clicked.current = ref.current.getObjectByName(params?.id)
     if (clicked.current) {
       clicked.current.parent.updateWorldMatrix(true, true)
@@ -79,7 +91,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   return (
     <group
       ref={ref}
-      onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : '/item/' + e.object.name))}
+      onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : '/gallery/' + e.object.name))}
       onPointerMissed={() => setLocation('/')}>
       {images.map((props) => <Frame key={props.url} {...props} /> /* prettier-ignore */)}
     </group>
@@ -89,7 +101,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
 function Frame({ url, c = new THREE.Color(), ...props }) {
   const image = useRef()
   const frame = useRef()
-  const [, params] = useRoute('/item/:id')
+  const [, params] = useRoute('/gallery/:id')
   const [hovered, hover] = useState(false)
   const [rnd] = useState(() => Math.random())
   const name = props.idname
