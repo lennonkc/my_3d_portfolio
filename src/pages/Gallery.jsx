@@ -52,12 +52,18 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
     clicked.current = ref.current.getObjectByName(params?.id)
     if (clicked.current) {
       clicked.current.parent.updateWorldMatrix(true, true)
-      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.50))
+      if (screenWidth < 768) {
+        clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 3.0)) // 小屏幕更远
+      } else if (screenWidth < 1024) {
+        clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 2.5)) // 中等屏幕
+      } else {
+        clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 2.0)) // 大屏幕
+      }
       clicked.current.parent.getWorldQuaternion(q)
     } else {
       // 🔹 根据屏幕宽度调整相机默认位置
       if (screenWidth < 768) { // 适配小屏幕
-        p.set(0, 0.4, 7.2) // 适当拉远
+        p.set(0, 0.4, 8.2) // 适当拉远
       } else if (screenWidth < 1024) {
         p.set(0, 0.2, 6.5) // 平板稍微近一些
       } else {
@@ -98,7 +104,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
     // 生成动态蓝色
     const flowingBlue = new THREE.Color().setHSL(hue, 1, lightness); // 饱和度固定 1
 
-    image.current.material.zoom = Math.min(1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 5) / 2, 1.8);
+    image.current.material.zoom = Math.min(1.4 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 5) * 0.2, 1.5);
     easing.damp3(image.current.scale, [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1], 0.1, dt)
     easing.dampC(frame.current.material.color, hovered ? flowingBlue : new THREE.Color('white'), 0.1, dt);
   });
