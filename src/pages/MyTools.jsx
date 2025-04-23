@@ -6,6 +6,7 @@ import copyIcon from "../assets/icons/copymd.svg";
 import exportIcon from "../assets/icons/exportsvg.svg";
 import noteIcon from "../assets/icons/notesvg.svg";
 import scrollIcon from "../assets/icons/mousescrolling.svg";
+import fullscreenIcon from "../assets/icons/fullscreen.svg"; // 添加全屏图标导入
 
 // 创建transformer实例
 const transformer = new Transformer();
@@ -91,6 +92,21 @@ const useMarkmap = () => {
     }
   }, []);
 
+  // 全屏功能
+  const toggleFullscreen = useCallback(() => {
+    if (containerRef.current) {
+      if (!document.fullscreenElement) {
+        containerRef.current.requestFullscreen().catch(err => {
+          alert(`全屏模式出错: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+  }, []);
+
   return {
     svgRef,
     containerRef,
@@ -99,14 +115,16 @@ const useMarkmap = () => {
     exportAsSVG,
     copyToClipboard,
     mdContent,
+    toggleFullscreen, // 添加全屏功能到返回值
   };
 };
 
 // 新增组件：控制按钮区域
-const ControlButtons = ({ onCopy, onExport }) => {
+const ControlButtons = ({ onCopy, onExport, onToggleFullscreen }) => {
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showExportTooltip, setShowExportTooltip] = useState(false);
   const [showTipTooltip, setShowTipTooltip] = useState(false);
+  const [showFullscreenTooltip, setShowFullscreenTooltip] = useState(false);
   
   return (
     <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md backdrop-blur-sm">
@@ -134,7 +152,8 @@ const ControlButtons = ({ onCopy, onExport }) => {
             onMouseLeave={() => setShowExportTooltip(false)}
             className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
             title="Export SVG">
-            <img src={exportIcon} alt="Export" className="w-5 h-5" />
+            {/* 使用scale实现图标放大效果,不影响按钮整体大小 */}
+            <img src={exportIcon} alt="Export" className="w-5 h-5 transform scale-[1.3]" />
           </button>
           {showExportTooltip && (
             <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20 min-w-[220px]">
@@ -163,6 +182,23 @@ const ControlButtons = ({ onCopy, onExport }) => {
             </div>
           )}
         </div>
+        
+        {/* 新增全屏按钮 */}
+        <div className="relative">
+          <button 
+            onClick={onToggleFullscreen}
+            onMouseEnter={() => setShowFullscreenTooltip(true)}
+            onMouseLeave={() => setShowFullscreenTooltip(false)}
+            className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+            title="fullscreen_view">
+            <img src={fullscreenIcon} alt="fullscreen" className="w-5 h-5" />
+          </button>
+          {showFullscreenTooltip && (
+            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20 min-w-[220px]">
+              <p className="text-center blue-gradient_text font-medium">Full screen preview</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -176,6 +212,7 @@ const MyTools = () => {
     error,
     exportAsSVG,
     copyToClipboard,
+    toggleFullscreen, // 获取全屏功能
   } = useMarkmap();
 
   return (
@@ -221,6 +258,7 @@ const MyTools = () => {
               <ControlButtons 
                 onCopy={copyToClipboard}
                 onExport={exportAsSVG}
+                onToggleFullscreen={toggleFullscreen} // 传递全屏功能
               />
               
               {/* 思维导图 SVG - 调整以完全填充容器空间 */}
