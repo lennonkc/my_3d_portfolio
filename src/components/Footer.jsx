@@ -14,11 +14,11 @@ const Footer = () => {
   const [isWeChatHovered, setIsWeChatHovered] = useState(false);
 
   return (
-    <footer className='footer font-poppins'>
+    <footer className='footer font-poppins w-full'>
       <hr className='border-slate-200' />
 
       <div className='footer-container'>
-        <p>
+        <p className='text-sm md:text-base'>
           © 2025 Created by <strong>KunCheng Li</strong>. All rights reserved.
           <br />
           This website is for personal learning use only. No commercial use.
@@ -46,12 +46,13 @@ const Footer = () => {
 
               {/* 🔹 只在 WeChat 被悬停时，显示二维码 */}
               {link.name === "WeChat" && isWeChatHovered && (
-                <img
-                  src="/wechatQRcode.png" // 确保路径正确
-                  alt="WeChat QR Code"
-                  style={{ width: "250px", height: "300px", maxWidth: "none", display: "block", left: "50px" }}
-                  className="absolute top-[-1280%] transform -translate-x-1/2 shadow-lg transition-opacity duration-300"
-                />
+                <div className="absolute top-[-320px] left-1/2 transform -translate-x-1/2 w-[250px] z-10">
+                  <img
+                    src="/wechatQRcode.png"
+                    alt="WeChat QR Code"
+                    className="w-full h-auto shadow-lg rounded-md transition-opacity duration-300"
+                  />
+                </div>
               )}
             </Link>
           ))}

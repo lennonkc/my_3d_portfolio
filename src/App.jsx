@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { Footer, Navbar } from "./components";
-import { About, Contact, Home, Projects, Gallery } from "./pages";
+import { About, Contact, Home, Projects, Gallery, MyTools } from "./pages";
 
 const pexel = (id) => `/galleryOut${id}.png`
 const images = [
@@ -37,6 +37,7 @@ const App = () => {
                   <Route path='/contact' element={<Contact />} />
                   <Route path='/gallery' element={<Gallery images={images}/>} />
                   <Route path='/gallery/:id' element={<Gallery images={images}/>} />
+                  <Route path='/mytools' element={<MyTools />} />
                 </Routes>
                 <Footer />
               </>

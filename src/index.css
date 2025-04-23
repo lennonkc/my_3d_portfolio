@@ -15,6 +15,8 @@
 /* 如果 Navbar 不想固定在顶部，就让它在文档流中占高度即可 */
 header.header {
   flex: 0 0 auto;
+  padding-left: 2.5rem;  /* 添加左边距，值可根据需要调整 */
+  padding-right: 2.5rem; /* 添加右边距，值可根据需要调整 */
   /* 你原来的样式都可以保留 */
   /* 比如 background-color / height / 等等 */
 }
@@ -103,11 +105,11 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .header {
-    @apply flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
+    @apply flex w-full justify-center items-center py-4 absolute top-0 bg-transparent z-10 right-0 left-0;
   }
 
   .footer {
-    @apply max-w-5xl mx-auto sm:px-16 pb-6 px-8 flex flex-col gap-7;
+    @apply max-w-full mx-auto sm:px-16 px-6 pb-6 flex flex-col gap-7;
   }
 
   .footer-container {
