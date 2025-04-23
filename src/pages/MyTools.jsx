@@ -6,14 +6,13 @@ import { CTA } from "../components";
 // 创建transformer实例
 const transformer = new Transformer();
 
-// 自定义钩子：用于处理思维导图相关逻辑
+// 自定义钩子：使用markmap内置方法处理思维导图相关逻辑
 const useMarkmap = () => {
   const [mdContent, setMdContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [scale, setScale] = useState(1);
-  const svgRef = useRef(null);
   const markmapRef = useRef(null);
+  const svgRef = useRef(null);
   const containerRef = useRef(null);
   
   // 获取Markdown内容
@@ -54,90 +53,102 @@ const useMarkmap = () => {
         markmapRef.current = Markmap.create(svgRef.current, null, root);
       } else {
         markmapRef.current.setData(root);
-        markmapRef.current.fit();
       }
+      
+      // 调整视图
+      setTimeout(() => {
+        if (markmapRef.current) {
+          markmapRef.current.fit(); // 首先适应视图
+        }
+      }, 100);
     }
   }, [mdContent, loading, error]);
 
-  // 设置滚轮事件处理
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // 阻止默认滚动行为的函数
-    const preventScroll = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-
-    // 添加多种事件监听，彻底阻止滚动
-    container.addEventListener('wheel', preventScroll, { passive: false });
-    container.addEventListener('DOMMouseScroll', preventScroll, { passive: false }); // Firefox
-    container.addEventListener('mousewheel', preventScroll, { passive: false }); // 旧版浏览器
-    
-    // 添加处理缩放的自定义事件
-    const handleZoom = (e) => {
-      if (markmapRef.current) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // 缩放系数：向下滚动缩小，向上滚动放大
-        const scaleFactor = e.deltaY < 0 ? 1.1 : 0.9;
-        
-        // 更新当前缩放值，不限制缩放范围
-        setScale(prevScale => prevScale * scaleFactor);
-        
-        // 应用缩放
-        markmapRef.current.rescale(scaleFactor);
-        return false;
-      }
-    };
-    
-    container.addEventListener('wheel', handleZoom, { passive: false });
-
-    // 清理函数
-    return () => {
-      container.removeEventListener('wheel', preventScroll);
-      container.removeEventListener('DOMMouseScroll', preventScroll);
-      container.removeEventListener('mousewheel', preventScroll);
-      container.removeEventListener('wheel', handleZoom);
-    };
-  }, []);
-
-  // 滑动条缩放
-  const handleSliderChange = useCallback((e) => {
-    if (markmapRef.current) {
-      const newScale = parseFloat(e.target.value);
-      const scaleFactor = newScale / scale;
-      markmapRef.current.rescale(scaleFactor);
-      setScale(newScale);
-    }
-  }, [scale]);
-
-  // 导出功能
-  const exportAsSVG = useCallback(() => {
-    if (svgRef.current) {
-      const serializer = new XMLSerializer();
-      const svgString = serializer.serializeToString(svgRef.current);
-      const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'AI工具思维导图.svg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }, []);
-
-  // 复制功能
+  // 复制功能 - 修改为复制原始Markdown内容
   const copyToClipboard = useCallback(() => {
+    if (mdContent) {
+      navigator.clipboard.writeText(mdContent);
+      alert('The Markdown content has been copied to the clipboard.');
+    }
+  }, [mdContent]);
+
+  // 导出功能 - 修改为导出PNG图片
+  const exportAsPNG = useCallback(() => {
     if (svgRef.current) {
-      const serializer = new XMLSerializer();
-      const svgString = serializer.serializeToString(svgRef.current);
-      navigator.clipboard.writeText(svgString);
-      alert('思维导图已复制到剪贴板');
+      try {
+        // 显示加载中提示
+        const loadingToast = () => alert("正在生成图片，请稍候...");
+        loadingToast();
+        
+        // 获取SVG元素并计算尺寸
+        const svgElement = svgRef.current;
+        const svgWidth = svgElement.clientWidth || svgElement.getBoundingClientRect().width;
+        const svgHeight = svgElement.clientHeight || svgElement.getBoundingClientRect().height;
+        
+        if (svgWidth === 0 || svgHeight === 0) {
+          alert("无法获取思维导图尺寸，请确保思维导图已正确加载");
+          return;
+        }
+        
+        // 创建临时Canvas
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        
+        // 设置Canvas尺寸（高分辨率）
+        const scale = 2; // 高清输出比例
+        canvas.width = svgWidth * scale;
+        canvas.height = svgHeight * scale;
+        
+        // 设置白色背景
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(scale, scale);
+        
+        // 转换SVG为数据URL
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(svgBlob);
+        
+        // 创建图像并在加载完成后绘制
+        const img = new Image();
+        img.onload = () => {
+          // 绘制图像
+          ctx.drawImage(img, 0, 0, svgWidth, svgHeight);
+          
+          // 将Canvas转换为PNG数据URL
+          try {
+            const pngUrl = canvas.toDataURL("image/png");
+            
+            // 创建下载链接
+            const link = document.createElement("a");
+            link.download = "AI-tools-mindmap.png";
+            link.href = pngUrl;
+            link.click();
+            
+            // 清理资源
+            URL.revokeObjectURL(url);
+            alert("导出成功！");
+          } catch (canvasError) {
+            console.error("Canvas导出错误:", canvasError);
+            alert("导出图片时发生错误，可能是由于跨域资源限制");
+          }
+        };
+        
+        // 错误处理
+        img.onerror = () => {
+          console.error("图片加载失败");
+          alert("无法加载SVG图像，导出失败");
+          URL.revokeObjectURL(url);
+        };
+        
+        // 设置图片源并开始加载
+        img.src = url;
+      } catch (error) {
+        console.error("导出PNG过程中发生错误:", error);
+        alert("导出过程中发生错误: " + error.message);
+      }
+    } else {
+      alert("思维导图尚未加载完成，请稍后再试");
     }
   }, []);
 
@@ -146,11 +157,30 @@ const useMarkmap = () => {
     containerRef,
     loading,
     error,
-    scale,
-    handleSliderChange,
-    exportAsSVG,
-    copyToClipboard
+    exportAsPNG,
+    copyToClipboard,
+    mdContent,
   };
+};
+
+// 新增组件：控制按钮区域
+const ControlButtons = ({ onCopy, onExport }) => {
+  return (
+    <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md flex flex-col gap-3 backdrop-blur-sm">
+      <div className="flex flex-col gap-2">
+        <button 
+          onClick={onCopy} 
+          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
+          <span>📋</span> Copy
+        </button>
+        <button 
+          onClick={onExport} 
+          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
+          <span>📥</span> Export
+        </button>
+      </div>
+    </div>
+  );
 };
 
 const MyTools = () => {
@@ -159,86 +189,59 @@ const MyTools = () => {
     containerRef,
     loading,
     error,
-    scale,
-    handleSliderChange,
-    exportAsSVG,
-    copyToClipboard
+    exportAsPNG,
+    copyToClipboard,
   } = useMarkmap();
 
   return (
-    <section className='w-full pt-24'>
+    <section className='w-full pt-24 min-h-screen flex flex-col '>
       <h1 className='head-text w-4/5 mx-auto items-center gap-2 px-4 '>
         <span className='blue-gradient_text font-semibold drop-shadow flex items-center'>
           My AI Tools Map 
           <svg t="1745389561378" className="icon ml-2" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5540" width="30" height="30">
-            <path d="M726.016 373.248H322.56c-16.896 0-30.72 13.312-30.72 30.208V414.72c0 16.384-13.824 30.208-30.72 30.208H209.92v-184.32c0-16.384 13.824-30.208 30.72-30.208h227.328c16.896 0 30.72-13.312 30.72-30.208V30.208c0-16.384-13.824-30.208-30.72-30.208H91.136c-16.896 0-30.72 13.312-30.72 30.208v170.496c0 16.384 13.824 30.208 30.72 30.208s30.72 13.312 30.72 30.208v762.88H209.92v-122.368h51.712c16.896 0 30.72 13.312 30.72 30.208v13.312c0 16.384 13.824 30.208 30.72 30.208h610.304c16.896 0 30.72-13.312 30.72-30.208v-173.056c0-16.384-13.824-30.208-30.72-30.208H322.56c-16.896 0-30.72 13.312-30.72 30.208v13.312c0 16.384-13.824 30.208-30.72 30.208H209.92v-284.16h51.712c16.896 0 30.72 13.312 30.72 30.208v11.264c0 16.384 13.824 30.208 30.72 30.208h402.944c16.896 0 30.72-13.312 30.72-30.208v-168.96c-0.512-16.896-13.824-30.72-30.72-30.72z" fill="#1296db" p-id="5541"></path>
           </svg>
         </span>
       </h1>
-
-      <div className='mt-2 mb-3 w-4/5 mx-auto flex-col gap-2 text-slate-500 px-4'>
+      <div className='mt-2 mb-3 w-4/5 mx-auto flex-col gap-2 text-slate-500 px-4 '>
         <p>
-          这是一个关于AI工具的思维导图，展示了当前AI技术生态最流行、最好用的系统和工具。我会每周更新这个思维导图。
+        A mind map about AI tools, showcasing the most popular and user-friendly systems and tools in the current AI technology ecosystem. 
           <br/>
-          如果你想参与编辑，可以访问<a href="https://github.com/lennonkc/ai-tools-map" className='blue-gradient_text font-semibold drop-shadow'>这个项目</a>。
+          I will update this mind map every week. If you want to participate in editing, you can visit  <a href="https://github.com/lennonkc/ai-tools-map" className='blue-gradient_text font-semibold drop-shadow'>    This Repo</a>
         </p>
       </div>
 
-      <div className='py-3 flex flex-col items-center'>
+      <div className='py-3 flex flex-col items-center flex-1 rounded-xl'>
         {loading && (
           <div className="w-full flex justify-center items-center py-10">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 "></div>
             <p className="ml-3 text-xl font-semibold">加载中...</p>
           </div>
         )}
         
-        {error && <p className="text-xl font-semibold text-red-500 py-10">出错了: {error}</p>}
+        {error && <p className="text-xl font-semibold text-red-500 py-10">Something Wrong: {error}</p>}
         
-        {/* 思维导图显示区域 - 调整为80%宽度并降低高度 */}
-        <div className="relative w-4/5 mx-auto my-4 overflow-hidden">
+        {/* 思维导图显示区域 - 调整为填充剩余空间 */}
+        <div className="relative w-4/5 mx-auto my-4 overflow-hidden flex-1 flex flex-col">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 blur-xl opacity-20 animate-pulse"></div>
           
-          {/* 降低容器高度 */}
-          <div className="relative glassmorphism rounded-2xl p-2 min-h-[60vh] flex flex-col">
-            {/* SVG容器 - 使用滚轮缩放功能 */}
+          {/* 容器高度填充可用空间 */}
+          <div className="relative glassmorphism rounded-2xl p-2 flex-1 flex flex-col">
+            {/* SVG容器 - 确保没有内边距 */}
             <div 
               ref={containerRef}
               className="flex-1 relative overflow-hidden"
-              style={{touchAction: 'none'}}
+              style={{touchAction: 'none', height: '100%'}}
             >
-              {/* 侧边控制区域 */}
-              <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md flex flex-col gap-3 backdrop-blur-sm">
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-xs font-medium text-gray-600">缩放比例</span>
-                  <input
-                    type="range"
-                    min="0.1"
-                    max="5"
-                    step="0.1"
-                    value={scale}
-                    onChange={handleSliderChange}
-                    className="w-28 h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
-                  />
-                  <span className="text-xs text-gray-500">{Math.round(scale * 100)}%</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <button 
-                    onClick={copyToClipboard} 
-                    className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
-                    <span>📋</span> 复制
-                  </button>
-                  <button 
-                    onClick={exportAsSVG} 
-                    className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
-                    <span>📥</span> 导出SVG
-                  </button>
-                </div>
-              </div>
+              {/* 使用重构后的控制按钮组件 */}
+              <ControlButtons 
+                onCopy={copyToClipboard}
+                onExport={exportAsPNG}
+              />
               
-              {/* 思维导图 SVG - 减小最小高度 */}
+              {/* 思维导图 SVG - 调整以完全填充容器空间 */}
               <svg 
                 ref={svgRef} 
-                className="w-full h-full min-h-[65vh] bg-white/90 rounded-xl transform transition-transform"
+                className="w-full h-full min-h-[65vh] bg-white/90 rounded-xl transform transition-transform absolute inset-0"
               />
             </div>
             
