@@ -4,7 +4,6 @@ import { Markmap } from "markmap-view";
 import { CTA } from "../components";
 import copyIcon from "../assets/icons/copymd.svg";
 import exportIcon from "../assets/icons/exportsvg.svg";
-import zoomInIcon from "../assets/icons/zoomsvg.svg";
 import noteIcon from "../assets/icons/notesvg.svg";
 import scrollIcon from "../assets/icons/mousescrolling.svg";
 
@@ -42,10 +41,8 @@ const useMarkmap = () => {
     fetchMdFile();
   }, []);
 
-  // 创建或更新思维导图
   useEffect(() => {
     if (!loading && !error && mdContent && svgRef.current) {
-      // 清除旧的思维导图内容
       if (svgRef.current.innerHTML) {
         svgRef.current.innerHTML = '';
       }
@@ -107,37 +104,61 @@ const useMarkmap = () => {
 
 // 新增组件：控制按钮区域
 const ControlButtons = ({ onCopy, onExport }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
+  const [showExportTooltip, setShowExportTooltip] = useState(false);
+  const [showTipTooltip, setShowTipTooltip] = useState(false);
   
   return (
     <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md backdrop-blur-sm">
       <div className="flex flex-row gap-2">
-        <button 
-          onClick={onCopy} 
-          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
-          title="复制Markdown内容">
-          <img src={copyIcon} alt="Copy" className="w-5 h-5" />
-        </button>
-        <button 
-          onClick={onExport} 
-          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
-          title="导出SVG">
-          <img src={exportIcon} alt="Export" className="w-5 h-5" />
-        </button>
         <div className="relative">
           <button 
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
+            onClick={onCopy} 
+            onMouseEnter={() => setShowCopyTooltip(true)}
+            onMouseLeave={() => setShowCopyTooltip(false)}
             className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
-            title="查看提示">
+            title="Copy Markdown">
+            <img src={copyIcon} alt="Copy" className="w-5 h-5" />
+          </button>
+          {showCopyTooltip && (
+            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20 min-w-[220px]">
+              <p className="text-center blue-gradient_text font-medium">Copy as Markdown</p>
+            </div>
+          )}
+        </div>
+        
+        <div className="relative">
+          <button 
+            onClick={onExport} 
+            onMouseEnter={() => setShowExportTooltip(true)}
+            onMouseLeave={() => setShowExportTooltip(false)}
+            className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+            title="Export SVG">
+            <img src={exportIcon} alt="Export" className="w-5 h-5" />
+          </button>
+          {showExportTooltip && (
+            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20 min-w-[220px]">
+              <p className="text-center blue-gradient_text font-medium">Export Svg Image</p>
+            </div>
+          )}
+        </div>
+        
+        <div className="relative">
+          <button 
+            onMouseEnter={() => setShowTipTooltip(true)}
+            onMouseLeave={() => setShowTipTooltip(false)}
+            className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+            title="tip">
             <img src={noteIcon} alt="Tip" className="w-5 h-5" />
           </button>
-          {showTooltip && (
-            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20">
-              <div className="flex flex-row items-center gap-3">
-                <p className="text-lg font-bold">CTRL +</p>
-                <img src={scrollIcon} alt="Mouse scroll" className="w-20 h-20" />
-                <p className="text-sm">可以放大或缩小思维导图</p>
+          {showTipTooltip && (
+            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20 min-w-[220px]">
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <p className="text-lg font-bold blue-gradient_text">CTRL +</p>
+                  <img src={scrollIcon} alt="Mouse scroll" className="w-12 h-12" />
+                </div>
+                <p className="text-center blue-gradient_text">Hold "CTRL" + scrolling to ZOOM</p>
               </div>
             </div>
           )}
