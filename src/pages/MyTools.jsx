@@ -2,6 +2,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Transformer } from "markmap-lib";
 import { Markmap } from "markmap-view";
 import { CTA } from "../components";
+import copyIcon from "../assets/icons/copymd.svg";
+import exportIcon from "../assets/icons/exportsvg.svg";
+import zoomInIcon from "../assets/icons/zoomsvg.svg";
+import noteIcon from "../assets/icons/notesvg.svg";
+import scrollIcon from "../assets/icons/mousescrolling.svg";
 
 // 创建transformer实例
 const transformer = new Transformer();
@@ -72,83 +77,20 @@ const useMarkmap = () => {
     }
   }, [mdContent]);
 
-  // 导出功能 - 修改为导出PNG图片
-  const exportAsPNG = useCallback(() => {
+  // 导出功能 - 恢复为导出SVG文件
+  const exportAsSVG = useCallback(() => {
     if (svgRef.current) {
-      try {
-        // 显示加载中提示
-        const loadingToast = () => alert("正在生成图片，请稍候...");
-        loadingToast();
-        
-        // 获取SVG元素并计算尺寸
-        const svgElement = svgRef.current;
-        const svgWidth = svgElement.clientWidth || svgElement.getBoundingClientRect().width;
-        const svgHeight = svgElement.clientHeight || svgElement.getBoundingClientRect().height;
-        
-        if (svgWidth === 0 || svgHeight === 0) {
-          alert("无法获取思维导图尺寸，请确保思维导图已正确加载");
-          return;
-        }
-        
-        // 创建临时Canvas
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        
-        // 设置Canvas尺寸（高分辨率）
-        const scale = 2; // 高清输出比例
-        canvas.width = svgWidth * scale;
-        canvas.height = svgHeight * scale;
-        
-        // 设置白色背景
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(scale, scale);
-        
-        // 转换SVG为数据URL
-        const svgData = new XMLSerializer().serializeToString(svgElement);
-        const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
-        const url = URL.createObjectURL(svgBlob);
-        
-        // 创建图像并在加载完成后绘制
-        const img = new Image();
-        img.onload = () => {
-          // 绘制图像
-          ctx.drawImage(img, 0, 0, svgWidth, svgHeight);
-          
-          // 将Canvas转换为PNG数据URL
-          try {
-            const pngUrl = canvas.toDataURL("image/png");
-            
-            // 创建下载链接
-            const link = document.createElement("a");
-            link.download = "AI-tools-mindmap.png";
-            link.href = pngUrl;
-            link.click();
-            
-            // 清理资源
-            URL.revokeObjectURL(url);
-            alert("导出成功！");
-          } catch (canvasError) {
-            console.error("Canvas导出错误:", canvasError);
-            alert("导出图片时发生错误，可能是由于跨域资源限制");
-          }
-        };
-        
-        // 错误处理
-        img.onerror = () => {
-          console.error("图片加载失败");
-          alert("无法加载SVG图像，导出失败");
-          URL.revokeObjectURL(url);
-        };
-        
-        // 设置图片源并开始加载
-        img.src = url;
-      } catch (error) {
-        console.error("导出PNG过程中发生错误:", error);
-        alert("导出过程中发生错误: " + error.message);
-      }
-    } else {
-      alert("思维导图尚未加载完成，请稍后再试");
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svgRef.current);
+      const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'AI-tools-mindmap.svg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
   }, []);
 
@@ -157,7 +99,7 @@ const useMarkmap = () => {
     containerRef,
     loading,
     error,
-    exportAsPNG,
+    exportAsSVG,
     copyToClipboard,
     mdContent,
   };
@@ -165,19 +107,41 @@ const useMarkmap = () => {
 
 // 新增组件：控制按钮区域
 const ControlButtons = ({ onCopy, onExport }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  
   return (
-    <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md flex flex-col gap-3 backdrop-blur-sm">
-      <div className="flex flex-col gap-2">
+    <div className="absolute right-2 top-2 z-10 bg-white/70 rounded-xl p-3 shadow-md backdrop-blur-sm">
+      <div className="flex flex-row gap-2">
         <button 
           onClick={onCopy} 
-          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
-          <span>📋</span> Copy
+          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+          title="复制Markdown内容">
+          <img src={copyIcon} alt="Copy" className="w-5 h-5" />
         </button>
         <button 
           onClick={onExport} 
-          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1">
-          <span>📥</span> Export
+          className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+          title="导出SVG">
+          <img src={exportIcon} alt="Export" className="w-5 h-5" />
         </button>
+        <div className="relative">
+          <button 
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+            className="bg-white/80 rounded-lg px-3 py-1.5 text-sm shadow hover:shadow-md transition-all duration-300 flex items-center gap-1"
+            title="查看提示">
+            <img src={noteIcon} alt="Tip" className="w-5 h-5" />
+          </button>
+          {showTooltip && (
+            <div className="absolute top-full right-0 mt-2 p-3 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm whitespace-nowrap z-20">
+              <div className="flex flex-row items-center gap-3">
+                <p className="text-lg font-bold">CTRL +</p>
+                <img src={scrollIcon} alt="Mouse scroll" className="w-20 h-20" />
+                <p className="text-sm">可以放大或缩小思维导图</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -189,7 +153,7 @@ const MyTools = () => {
     containerRef,
     loading,
     error,
-    exportAsPNG,
+    exportAsSVG,
     copyToClipboard,
   } = useMarkmap();
 
@@ -235,7 +199,7 @@ const MyTools = () => {
               {/* 使用重构后的控制按钮组件 */}
               <ControlButtons 
                 onCopy={copyToClipboard}
-                onExport={exportAsPNG}
+                onExport={exportAsSVG}
               />
               
               {/* 思维导图 SVG - 调整以完全填充容器空间 */}
