@@ -7,7 +7,6 @@
 首先需要安装依赖并运行开发服务器：
 
 ```bash
-cd /Users/amberwong/Documents/MyCodes/Portfolio/3D_portfolio
 npm install
 npm run dev
 ```
