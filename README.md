@@ -1,3 +1,4 @@
+# [Live Website](https://kc-li.com)
 # 项目结构和说明
 
 根据当前工程结构，这是一个使用React + Three.js构建的3D个人作品集项目。以下是项目的启动和使用方法：
